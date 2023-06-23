@@ -62,6 +62,10 @@ const editProfile = (req, res, next) => {
     .orFail()
     .then((user) => { res.send(user); })
     .catch((err) => {
+      if (err.code === 11000) {
+        next(new ConflictError('Пользователь с таким email уже зарегистрирован'));
+        return;
+      }
       if (err instanceof mongoose.Error.ValidationError) {
         next(new BadRequestError('Переданы некорректные данные'));
         return;
