@@ -57,8 +57,8 @@ const createUser = (req, res, next) => {
 };
 
 const editProfile = (req, res, next) => {
-  const { name } = req.body;
-  User.findByIdAndUpdate(req.user._id, { name }, { new: true, runValidators: true })
+  const { email, name } = req.body;
+  User.findByIdAndUpdate(req.user._id, { email, name }, { new: true, runValidators: true })
     .orFail()
     .then((user) => { res.send(user); })
     .catch((err) => {
